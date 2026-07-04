@@ -1,17 +1,17 @@
 use super::Val;
 use std::fmt;
 
-pub struct ListOf<T: Val> {
-    v: Vec<T>,
+pub struct AnyList {
+    v: Vec<Box<dyn Val>>,
 }
 
-impl<T: Val> ListOf<T> {
-    pub fn new(v: Vec<T>) -> Self {
+impl AnyList {
+    pub fn new(v: Vec<Box<dyn Val>>) -> Self {
         Self { v }
     }
 }
 
-impl<T: Val> Val for ListOf<T> {
+impl Val for AnyList {
     fn display(&self) {
         println!("{}", self)
     }
@@ -21,7 +21,7 @@ impl<T: Val> Val for ListOf<T> {
     }
 }
 
-impl<T: Val> fmt::Display for ListOf<T> {
+impl fmt::Display for AnyList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
             .v
@@ -33,17 +33,14 @@ impl<T: Val> fmt::Display for ListOf<T> {
     }
 }
 
-impl<T: Val> fmt::Debug for ListOf<T> {
+impl fmt::Debug for AnyList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let fty = std::any::type_name::<T>();
-        let ty = fty.split("::").last().unwrap_or(fty);
-
         let s = self
             .v
             .iter()
             .map(|x| format!("{:?}", x))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "ListOf<{}>({})", ty, s)
+        write!(f, "AnyList([{}])", s)
     }
 }

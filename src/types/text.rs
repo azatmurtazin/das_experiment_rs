@@ -13,13 +13,23 @@ impl Text {
 }
 
 impl Val for Text {
-    fn inspect(&self) {
+    fn display(&self) {
         println!("{}", self)
+    }
+
+    fn inspect(&self) {
+        println!("{:?}", self)
     }
 }
 
 impl fmt::Display for Text {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Text({})", self.v)
+        write!(f, "{}", self.v)
+    }
+}
+
+impl fmt::Debug for Text {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Text({:?})", self.v)
     }
 }

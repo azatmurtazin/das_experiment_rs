@@ -13,13 +13,23 @@ impl Int {
 }
 
 impl Val for Int {
+    fn display(&self) {
+        println!("{:}", self)
+    }
+
     fn inspect(&self) {
-        println!("{}", self)
+        println!("{:?}", self)
     }
 }
 
 impl fmt::Display for Int {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Int({})", self.v)
+        write!(f, "{}", self.v)
+    }
+}
+
+impl fmt::Debug for Int {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Int({:?})", self.v)
     }
 }
