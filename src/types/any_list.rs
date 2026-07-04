@@ -1,6 +1,7 @@
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct AnyList {
     v: Vec<Box<dyn Val>>,
 }

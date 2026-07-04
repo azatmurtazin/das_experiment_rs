@@ -1,6 +1,7 @@
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct ListOf<T: Val> {
     v: Vec<T>,
 }
@@ -11,7 +12,7 @@ impl<T: Val> ListOf<T> {
     }
 }
 
-impl<T: Val> Val for ListOf<T> {
+impl<T: Val + Clone> Val for ListOf<T> {
     fn display(&self) {
         println!("{}", self)
     }

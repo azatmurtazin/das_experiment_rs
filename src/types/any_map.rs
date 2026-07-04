@@ -1,12 +1,15 @@
+use crate::types::AnyKv;
+
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct AnyMap {
-    v: Vec<Box<dyn Val>>,
+    v: Vec<AnyKv>,
 }
 
 impl AnyMap {
-    pub fn new(v: Vec<Box<dyn Val>>) -> Self {
+    pub fn new(v: Vec<AnyKv>) -> Self {
         Self { v }
     }
 }

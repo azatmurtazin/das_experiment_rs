@@ -1,17 +1,20 @@
+use crate::types::KvOf;
+
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct MapOf<T: Val> {
-    v: Vec<T>,
+    v: Vec<KvOf<T>>,
 }
 
 impl<T: Val> MapOf<T> {
-    pub fn new(v: Vec<T>) -> Self {
+    pub fn new(v: Vec<KvOf<T>>) -> Self {
         Self { v }
     }
 }
 
-impl<T: Val> Val for MapOf<T> {
+impl<T: Val + Clone> Val for MapOf<T> {
     fn display(&self) {
         println!("{}", self)
     }

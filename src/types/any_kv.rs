@@ -3,6 +3,7 @@ use crate::types::Text;
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct AnyKv {
     k: Text,
     v: Box<dyn Val>,

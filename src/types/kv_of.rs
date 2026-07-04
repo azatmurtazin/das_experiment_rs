@@ -3,6 +3,7 @@ use crate::types::Text;
 use super::Val;
 use std::fmt;
 
+#[derive(Clone)]
 pub struct KvOf<T: Val> {
     k: Text,
     v: T,
@@ -14,7 +15,7 @@ impl<T: Val> KvOf<T> {
     }
 }
 
-impl<T: Val> Val for KvOf<T> {
+impl<T: Val + Clone> Val for KvOf<T> {
     fn display(&self) {
         println!("{}", self)
     }

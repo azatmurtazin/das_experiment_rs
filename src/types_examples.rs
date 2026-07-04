@@ -1,4 +1,4 @@
-use crate::types::{AnyKv, AnyList, Int, KvOf, ListOf, Text, Val};
+use crate::types::*;
 use std::vec;
 
 pub fn run() {
@@ -20,6 +20,9 @@ pub fn run() {
     let kv3 = AnyKv::new(Text::new("qwe".to_string()), Box::new(i1.clone()));
     let kv4 = AnyKv::new(Text::new("rty".to_string()), Box::new(t1.clone()));
 
+    let m1: MapOf<Int> = MapOf::new(vec![kv1.clone(), kv2.clone()]);
+    let m2: AnyMap = AnyMap::new(vec![kv3.clone(), kv4.clone()]);
+
     let values: Vec<Box<dyn Val>> = vec![
         Box::new(i1),
         Box::new(t1),
@@ -31,6 +34,8 @@ pub fn run() {
         Box::new(kv2),
         Box::new(kv3),
         Box::new(kv4),
+        Box::new(m1),
+        Box::new(m2),
     ];
 
     for value in values {
