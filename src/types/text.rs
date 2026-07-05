@@ -12,6 +12,12 @@ impl Text {
     }
 }
 
+impl From<&str> for Text {
+    fn from(s: &str) -> Self {
+        Text::new(s.to_string())
+    }
+}
+
 impl Val for Text {
     fn display(&self) {
         println!("{}", self)
