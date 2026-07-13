@@ -2,13 +2,11 @@ use super::Val;
 use std::fmt;
 
 #[derive(Clone)]
-pub struct Int {
-    v: i64,
-}
+pub struct Int(i64);
 
 impl Int {
     pub fn new(v: i64) -> Self {
-        Self { v }
+        Self(v)
     }
 }
 
@@ -24,12 +22,12 @@ impl Val for Int {
 
 impl fmt::Display for Int {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.v)
+        write!(f, "{}", self.0)
     }
 }
 
 impl fmt::Debug for Int {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Int({:?})", self.v)
+        write!(f, "Int({:?})", self.0)
     }
 }

@@ -5,6 +5,7 @@ pub use int::Int;
 pub use kv_of::KvOf;
 pub use list_of::ListOf;
 pub use map_of::MapOf;
+pub use num::Num;
 pub use text::Text;
 pub use val::Val;
 
@@ -15,5 +16,6 @@ pub mod int;
 pub mod kv_of;
 pub mod list_of;
 pub mod map_of;
+pub mod num;
 pub mod text;
 pub mod val;

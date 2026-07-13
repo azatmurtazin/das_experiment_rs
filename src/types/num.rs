@@ -2,23 +2,17 @@ use super::Val;
 use std::fmt;
 
 #[derive(Clone)]
-pub struct Text(String);
+pub struct Num(f64);
 
-impl Text {
-    pub fn new(v: String) -> Self {
+impl Num {
+    pub fn new(v: f64) -> Self {
         Self(v)
     }
 }
 
-impl From<&str> for Text {
-    fn from(s: &str) -> Self {
-        Text::new(s.to_string())
-    }
-}
-
-impl Val for Text {
+impl Val for Num {
     fn display(&self) {
-        println!("{}", self)
+        println!("{:}", self)
     }
 
     fn inspect(&self) {
@@ -26,14 +20,20 @@ impl Val for Text {
     }
 }
 
-impl fmt::Display for Text {
+impl From<i64> for Num {
+    fn from(i: i64) -> Self {
+        Self::new(i as f64)
+    }
+}
+
+impl fmt::Display for Num {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.0)
     }
 }
 
-impl fmt::Debug for Text {
+impl fmt::Debug for Num {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Text({:?})", self.0)
+        write!(f, "Num({:?})", self.0)
     }
 }

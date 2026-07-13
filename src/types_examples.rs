@@ -7,6 +7,9 @@ pub fn run() {
     let i1 = Int::new(42);
     let i2 = Int::new(123);
 
+    let n1 = Num::new(3.14);
+    let n2 = Num::from(0);
+
     let t1 = Text::from("hello");
     let t2 = Text::from("world");
 
@@ -25,6 +28,8 @@ pub fn run() {
 
     let values: Vec<Box<dyn Val>> = vec![
         Box::new(i1),
+        Box::new(n1),
+        Box::new(n2),
         Box::new(t1),
         Box::new(t2),
         Box::new(l1),
