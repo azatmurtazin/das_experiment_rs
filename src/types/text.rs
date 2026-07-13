@@ -1,7 +1,7 @@
 use super::Val;
 use std::fmt;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Text(String);
 
 impl Text {

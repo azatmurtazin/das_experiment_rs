@@ -1,16 +1,17 @@
-use crate::types::KvOf;
-
-use super::Val;
+use super::{KvOf, Text, Val};
+use std::collections::HashMap;
 use std::fmt;
 
 #[derive(Clone)]
-pub struct MapOf<T: Val> {
-    v: Vec<KvOf<T>>,
-}
+pub struct MapOf<T: Val>(HashMap<Text, T>);
 
-impl<T: Val> MapOf<T> {
+impl<T: Val + Clone> MapOf<T> {
     pub fn new(v: Vec<KvOf<T>>) -> Self {
-        Self { v }
+        let mut m: HashMap<Text, T> = HashMap::new();
+        v.iter().for_each(|kv| {
+            m.insert(kv.key(), kv.val());
+        });
+        Self(m)
     }
 }
 
@@ -27,12 +28,12 @@ impl<T: Val + Clone> Val for MapOf<T> {
 impl<T: Val> fmt::Display for MapOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
-            .map(|x| format!("{}", x))
+            .map(|(k, v)| format!("{}=>{}", k, v))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "[{}]", s)
+        write!(f, "{{{}}}", s)
     }
 }
 
@@ -42,11 +43,11 @@ impl<T: Val> fmt::Debug for MapOf<T> {
         let ty = fty.split("::").last().unwrap_or(fty);
 
         let s = self
-            .v
+            .0
             .iter()
-            .map(|x| format!("{:?}", x))
+            .map(|(k, v)| format!("{:?}=>{:?}", k, v))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "MapOf<{}>({})", ty, s)
+        write!(f, "MapOf<{}>{{{}}}", ty, s)
     }
 }

@@ -2,13 +2,11 @@ use super::Val;
 use std::fmt;
 
 #[derive(Clone)]
-pub struct AnyList {
-    v: Vec<Box<dyn Val>>,
-}
+pub struct AnyList(Vec<Box<dyn Val>>);
 
 impl AnyList {
     pub fn new(v: Vec<Box<dyn Val>>) -> Self {
-        Self { v }
+        Self(v)
     }
 }
 
@@ -25,7 +23,7 @@ impl Val for AnyList {
 impl fmt::Display for AnyList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
             .map(|x| format!("{}", x))
             .collect::<Vec<String>>()
@@ -37,7 +35,7 @@ impl fmt::Display for AnyList {
 impl fmt::Debug for AnyList {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
             .map(|x| format!("{:?}", x))
             .collect::<Vec<String>>()

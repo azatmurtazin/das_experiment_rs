@@ -1,17 +1,20 @@
-use crate::types::Text;
-
-use super::Val;
+use super::{Text, Val};
 use std::fmt;
 
 #[derive(Clone)]
-pub struct KvOf<T: Val> {
-    k: Text,
-    v: T,
-}
+pub struct KvOf<T: Val>(Text, T);
 
-impl<T: Val> KvOf<T> {
+impl<T: Val + Clone> KvOf<T> {
     pub fn new(k: Text, v: T) -> Self {
-        Self { k, v }
+        Self(k, v)
+    }
+
+    pub fn key(&self) -> Text {
+        self.0.clone()
+    }
+
+    pub fn val(&self) -> T {
+        self.1.clone()
     }
 }
 
@@ -27,7 +30,7 @@ impl<T: Val + Clone> Val for KvOf<T> {
 
 impl<T: Val> fmt::Display for KvOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}:{})", self.k, self.v)
+        write!(f, "({}:{})", self.0, self.1)
     }
 }
 
@@ -36,6 +39,6 @@ impl<T: Val> fmt::Debug for KvOf<T> {
         let fty = std::any::type_name::<T>();
         let ty = fty.split("::").last().unwrap_or(fty);
 
-        write!(f, "KvOf<{}>({:?},{:?})", ty, self.k, self.v)
+        write!(f, "KvOf<{}>({:?},{:?})", ty, self.0, self.1)
     }
 }

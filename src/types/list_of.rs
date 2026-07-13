@@ -2,13 +2,11 @@ use super::Val;
 use std::fmt;
 
 #[derive(Clone)]
-pub struct ListOf<T: Val> {
-    v: Vec<T>,
-}
+pub struct ListOf<T: Val>(Vec<T>);
 
 impl<T: Val> ListOf<T> {
     pub fn new(v: Vec<T>) -> Self {
-        Self { v }
+        Self(v)
     }
 }
 
@@ -25,7 +23,7 @@ impl<T: Val + Clone> Val for ListOf<T> {
 impl<T: Val> fmt::Display for ListOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
             .map(|x| format!("{}", x))
             .collect::<Vec<String>>()
@@ -40,7 +38,7 @@ impl<T: Val> fmt::Debug for ListOf<T> {
         let ty = fty.split("::").last().unwrap_or(fty);
 
         let s = self
-            .v
+            .0
             .iter()
             .map(|x| format!("{:?}", x))
             .collect::<Vec<String>>()

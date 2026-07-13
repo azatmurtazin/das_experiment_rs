@@ -1,16 +1,16 @@
-use crate::types::AnyKv;
-
-use super::Val;
-use std::fmt;
+use super::{AnyKv, Text, Val};
+use std::{collections::HashMap, fmt};
 
 #[derive(Clone)]
-pub struct AnyMap {
-    v: Vec<AnyKv>,
-}
+pub struct AnyMap(HashMap<Text, Box<dyn Val>>);
 
 impl AnyMap {
     pub fn new(v: Vec<AnyKv>) -> Self {
-        Self { v }
+        let mut m: HashMap<Text, Box<dyn Val>> = HashMap::new();
+        v.iter().for_each(|kv| {
+            m.insert(kv.key(), kv.val());
+        });
+        Self(m)
     }
 }
 
@@ -27,23 +27,23 @@ impl Val for AnyMap {
 impl fmt::Display for AnyMap {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
-            .map(|x| format!("{}", x))
+            .map(|(k, v)| format!("{}=>{}", k, v))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "[{}]", s)
+        write!(f, "{{{}}}", s)
     }
 }
 
 impl fmt::Debug for AnyMap {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
-            .v
+            .0
             .iter()
-            .map(|x| format!("{:?}", x))
+            .map(|(k, v)| format!("{:?}=>{:?}", k, v))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "AnyMap([{}])", s)
+        write!(f, "AnyMap{{{}}}", s)
     }
 }
