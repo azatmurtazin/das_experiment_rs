@@ -10,6 +10,12 @@ impl Int {
     }
 }
 
+impl From<i64> for Int {
+    fn from(i: i64) -> Self {
+        Self::new(i)
+    }
+}
+
 impl Val for Int {
     fn display(&self) {
         println!("{:}", self)

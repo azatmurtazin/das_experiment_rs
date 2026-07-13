@@ -20,6 +20,12 @@ impl Val for Num {
     }
 }
 
+impl From<f64> for Num {
+    fn from(f: f64) -> Self {
+        Self::new(f)
+    }
+}
+
 impl From<i64> for Num {
     fn from(i: i64) -> Self {
         Self::new(i as f64)
