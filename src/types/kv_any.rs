@@ -4,19 +4,14 @@ use super::{Text, Val};
 use std::fmt;
 
 #[derive(Clone)]
-pub struct KvAny(Text, Box<dyn Val>);
+pub struct KvAny {
+    pub key: Text,
+    pub val: Box<dyn Val>,
+}
 
 impl KvAny {
-    pub fn new(k: Text, v: Box<dyn Val>) -> Self {
-        Self(k, v)
-    }
-
-    pub fn key(&self) -> Text {
-        self.0.clone()
-    }
-
-    pub fn val(&self) -> Box<dyn Val> {
-        self.1.clone()
+    pub fn new(key: Text, val: Box<dyn Val>) -> Self {
+        Self { key, val }
     }
 }
 
@@ -46,13 +41,13 @@ impl Val for KvAny {
 
 impl fmt::Display for KvAny {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}=>{})", self.0, self.1)
+        write!(f, "({}=>{})", self.key, self.val)
     }
 }
 
 impl fmt::Debug for KvAny {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "KvAny({:?}=>{:?})", self.0, self.1)
+        write!(f, "KvAny({:?}=>{:?})", self.key, self.val)
     }
 }
 

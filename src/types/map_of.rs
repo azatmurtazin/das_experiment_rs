@@ -1,4 +1,4 @@
-use super::{KvOf, Text, Val};
+use super::{Text, Val};
 use std::collections::HashMap;
 use std::fmt;
 
@@ -6,12 +6,8 @@ use std::fmt;
 pub struct MapOf<T: Val>(HashMap<Text, T>);
 
 impl<T: Val + Clone> MapOf<T> {
-    pub fn new(v: Vec<KvOf<T>>) -> Self {
-        let mut m: HashMap<Text, T> = HashMap::new();
-        v.iter().for_each(|kv| {
-            m.insert(kv.key(), kv.val());
-        });
-        Self(m)
+    pub fn new(v: HashMap<Text, T>) -> Self {
+        Self(v)
     }
 }
 
@@ -50,4 +46,17 @@ impl<T: Val> fmt::Debug for MapOf<T> {
             .join(",");
         write!(f, "MapOf<{}>{{{}}}", ty, s)
     }
+}
+
+#[macro_export]
+macro_rules! t_map_of {
+    ( $( $key:expr => $value:expr ),* $(,)? ) => {
+        {
+            let mut temp_map = std::collections::HashMap::new();
+            $(
+                temp_map.insert(Text::from($key), $value);
+            )*
+            MapOf::new(temp_map)
+        }
+    };
 }
