@@ -43,6 +43,13 @@ impl<T: Val> fmt::Debug for ListOf<T> {
             .map(|x| format!("{:?}", x))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "ListOf<{}>({})", ty, s)
+        write!(f, "ListOf<{}>[{}]", ty, s)
     }
+}
+
+#[macro_export]
+macro_rules! t_list_of {
+    ( $( $item:expr ),* $(,)? ) => {
+        ListOf::new(vec![ $( $item ),* ])
+    };
 }

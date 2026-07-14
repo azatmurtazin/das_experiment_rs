@@ -1,5 +1,4 @@
 use crate::types::*;
-use std::vec;
 
 pub fn run() {
     println!("### Map examples");
@@ -9,11 +8,11 @@ pub fn run() {
         t_kv_of!("five".to_string(), t_int!(5)),
     ]);
     let m2 = AnyMap::new(vec![
-        KvAny::new(t_text!("qwe"), box_val!(t_int!(42))),
-        KvAny::new(t_text!("rty"), box_val!(t_text!("hello"))),
+        t_kv_any!("qwe", box_val!(t_int!(42))),
+        t_kv_any!("rty", box_val!(t_text!("hello"))),
     ]);
 
-    let values: Vec<Box<dyn Val>> = vec![box_val!(m1), box_val!(m2)];
+    let values = t_list_any![m1, m2];
 
     for value in values {
         value.display();

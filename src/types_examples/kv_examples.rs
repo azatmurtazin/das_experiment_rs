@@ -1,5 +1,4 @@
 use crate::types::*;
-use std::vec;
 
 pub fn run() {
     println!("### KeyValue examples");
@@ -12,14 +11,7 @@ pub fn run() {
     let kv5 = t_kv_any!("w".to_string(), box_val!(t_num!(5.55)));
     let kv6 = t_kv_any!("e", t_text!("hello"));
 
-    let values: Vec<Box<dyn Val>> = vec![
-        box_val!(kv1),
-        box_val!(kv2),
-        box_val!(kv3),
-        box_val!(kv4),
-        box_val!(kv5),
-        box_val!(kv6),
-    ];
+    let values = t_list_any![kv1, kv2, kv3, kv4, kv5, kv6];
 
     for value in values {
         value.display();

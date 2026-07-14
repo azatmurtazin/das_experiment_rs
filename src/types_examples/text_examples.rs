@@ -1,5 +1,4 @@
 use crate::types::*;
-use std::vec;
 
 pub fn run() {
     println!("### Text examples");
@@ -8,7 +7,7 @@ pub fn run() {
     let t2 = t_text!("world".to_string());
     let t3 = t_text!(Text::from("!!!"));
 
-    let values: Vec<Box<dyn Val>> = vec![box_val!(t1), box_val!(t2), box_val!(t3)];
+    let values = t_list_any![t1, t2, t3];
 
     for value in values {
         value.display();
