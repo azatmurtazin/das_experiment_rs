@@ -37,3 +37,10 @@ impl fmt::Debug for Int {
         write!(f, "Int({:?})", self.0)
     }
 }
+
+#[macro_export]
+macro_rules! t_int {
+    ($val:expr) => {
+        Int::from($val)
+    };
+}

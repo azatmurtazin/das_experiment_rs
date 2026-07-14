@@ -18,6 +18,27 @@ impl<T: Val + Clone> KvOf<T> {
     }
 }
 
+impl<T: Val + Clone> From<(Text, T)> for KvOf<T> {
+    fn from(kv: (Text, T)) -> Self {
+        let (k, v) = kv;
+        Self::new(k, v)
+    }
+}
+
+impl<T: Val + Clone> From<(String, T)> for KvOf<T> {
+    fn from(kv: (String, T)) -> Self {
+        let (k, v) = kv;
+        Self::new(Text::from(k), v)
+    }
+}
+
+impl<T: Val + Clone> From<(&str, T)> for KvOf<T> {
+    fn from(kv: (&str, T)) -> Self {
+        let (k, v) = kv;
+        Self::new(Text::from(k), v)
+    }
+}
+
 impl<T: Val + Clone> Val for KvOf<T> {
     fn display(&self) {
         println!("{}", self)
@@ -41,4 +62,11 @@ impl<T: Val> fmt::Debug for KvOf<T> {
 
         write!(f, "KvOf<{}>({:?},{:?})", ty, self.0, self.1)
     }
+}
+
+#[macro_export]
+macro_rules! t_kv_of {
+    ($key:expr, $val:expr) => {
+        KvOf::from(($key, $val))
+    };
 }

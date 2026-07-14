@@ -1,8 +1,7 @@
-use std::fmt;
-
 use dyn_clone::{DynClone, clone_trait_object};
+use std::fmt::{Debug, Display};
 
-pub trait Val: fmt::Display + fmt::Debug + DynClone {
+pub trait Val: Display + Debug + DynClone {
     fn display(&self);
     fn inspect(&self);
 }

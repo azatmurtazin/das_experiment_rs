@@ -1,3 +1,8 @@
+pub use crate::t_int;
+pub use crate::t_kv_of;
+pub use crate::t_num;
+pub use crate::t_text;
+
 pub use any_kv::AnyKv;
 pub use any_list::AnyList;
 pub use any_map::AnyMap;

@@ -43,3 +43,10 @@ impl fmt::Debug for Num {
         write!(f, "Num({:?})", self.0)
     }
 }
+
+#[macro_export]
+macro_rules! t_num {
+    ($val:expr) => {
+        Num::from($val)
+    };
+}

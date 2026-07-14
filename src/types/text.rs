@@ -43,3 +43,10 @@ impl fmt::Debug for Text {
         write!(f, "Text({:?})", self.0)
     }
 }
+
+#[macro_export]
+macro_rules! t_text {
+    ($val:expr) => {
+        Text::from($val)
+    };
+}
