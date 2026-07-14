@@ -5,7 +5,7 @@ pub mod map_examples;
 pub mod text_examples;
 
 pub fn run() {
-    println!("### Dynamic types example");
+    println!("### Types examples\n");
 
     int_num_examples::run();
     text_examples::run();

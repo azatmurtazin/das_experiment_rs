@@ -1,11 +1,11 @@
-use super::{AnyKv, Text, Val};
+use super::{KvAny, Text, Val};
 use std::{collections::HashMap, fmt};
 
 #[derive(Clone)]
 pub struct AnyMap(HashMap<Text, Box<dyn Val>>);
 
 impl AnyMap {
-    pub fn new(v: Vec<AnyKv>) -> Self {
+    pub fn new(v: Vec<KvAny>) -> Self {
         let mut m: HashMap<Text, Box<dyn Val>> = HashMap::new();
         v.iter().for_each(|kv| {
             m.insert(kv.key(), kv.val());

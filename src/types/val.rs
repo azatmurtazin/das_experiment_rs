@@ -7,3 +7,10 @@ pub trait Val: Display + Debug + DynClone {
 }
 
 clone_trait_object!(Val);
+
+#[macro_export]
+macro_rules! box_val {
+    ($val:expr) => {
+        Box::new($val) as Box<dyn Val>
+    };
+}

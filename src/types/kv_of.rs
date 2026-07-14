@@ -25,20 +25,6 @@ impl<T: Val + Clone> From<(Text, T)> for KvOf<T> {
     }
 }
 
-impl<T: Val + Clone> From<(String, T)> for KvOf<T> {
-    fn from(kv: (String, T)) -> Self {
-        let (k, v) = kv;
-        Self::new(Text::from(k), v)
-    }
-}
-
-impl<T: Val + Clone> From<(&str, T)> for KvOf<T> {
-    fn from(kv: (&str, T)) -> Self {
-        let (k, v) = kv;
-        Self::new(Text::from(k), v)
-    }
-}
-
 impl<T: Val + Clone> Val for KvOf<T> {
     fn display(&self) {
         println!("{}", self)
@@ -51,7 +37,7 @@ impl<T: Val + Clone> Val for KvOf<T> {
 
 impl<T: Val> fmt::Display for KvOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}:{})", self.0, self.1)
+        write!(f, "({}=>{})", self.0, self.1)
     }
 }
 
@@ -60,13 +46,13 @@ impl<T: Val> fmt::Debug for KvOf<T> {
         let fty = std::any::type_name::<T>();
         let ty = fty.split("::").last().unwrap_or(fty);
 
-        write!(f, "KvOf<{}>({:?},{:?})", ty, self.0, self.1)
+        write!(f, "KvOf<{}>({:?}=>{:?})", ty, self.0, self.1)
     }
 }
 
 #[macro_export]
 macro_rules! t_kv_of {
     ($key:expr, $val:expr) => {
-        KvOf::from(($key, $val))
+        KvOf::from((Text::from($key), $val))
     };
 }
