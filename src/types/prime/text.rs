@@ -1,4 +1,4 @@
-use super::Val;
+use super::super::Val;
 use std::fmt;
 
 #[derive(Clone, PartialEq, Eq, Hash)]

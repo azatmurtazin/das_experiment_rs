@@ -1,6 +1,6 @@
 use crate::box_val;
 
-use super::Val;
+use super::super::Val;
 use std::fmt;
 
 #[derive(Clone)]

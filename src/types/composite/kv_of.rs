@@ -1,4 +1,4 @@
-use super::{Text, Val};
+use super::super::{Text, Val};
 use std::fmt;
 
 #[derive(Clone)]

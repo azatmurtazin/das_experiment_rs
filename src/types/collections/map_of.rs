@@ -1,16 +1,17 @@
-use super::{Text, Val};
-use std::{collections::HashMap, fmt};
+use super::super::{Text, Val};
+use std::collections::HashMap;
+use std::fmt;
 
 #[derive(Clone)]
-pub struct MapAny(HashMap<Text, Box<dyn Val>>);
+pub struct MapOf<T: Val>(HashMap<Text, T>);
 
-impl MapAny {
-    pub fn new(v: HashMap<Text, Box<dyn Val>>) -> Self {
+impl<T: Val + Clone> MapOf<T> {
+    pub fn new(v: HashMap<Text, T>) -> Self {
         Self(v)
     }
 }
 
-impl Val for MapAny {
+impl<T: Val + Clone> Val for MapOf<T> {
     fn display(&self) {
         println!("{}", self)
     }
@@ -20,7 +21,7 @@ impl Val for MapAny {
     }
 }
 
-impl fmt::Display for MapAny {
+impl<T: Val> fmt::Display for MapOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = self
             .0
@@ -32,27 +33,30 @@ impl fmt::Display for MapAny {
     }
 }
 
-impl fmt::Debug for MapAny {
+impl<T: Val> fmt::Debug for MapOf<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let fty = std::any::type_name::<T>();
+        let ty = fty.split("::").last().unwrap_or(fty);
+
         let s = self
             .0
             .iter()
             .map(|(k, v)| format!("{:?}=>{:?}", k, v))
             .collect::<Vec<String>>()
             .join(",");
-        write!(f, "MapAny{{{}}}", s)
+        write!(f, "MapOf<{}>{{{}}}", ty, s)
     }
 }
 
 #[macro_export]
-macro_rules! t_map_any {
+macro_rules! t_map_of {
     ( $( $key:expr => $value:expr ),* $(,)? ) => {
         {
             let mut temp_map = std::collections::HashMap::new();
             $(
-                temp_map.insert(Text::from($key), box_val!($value));
+                temp_map.insert(Text::from($key), $value);
             )*
-            MapAny::new(temp_map)
+            MapOf::new(temp_map)
         }
     };
 }
